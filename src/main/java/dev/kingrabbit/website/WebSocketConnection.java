@@ -153,6 +153,9 @@ public class WebSocketConnection extends TimerTask {
             System.out.println("Closing connection with id '" + id + "' due to " + reason);
             send("disconnect", "reason", reason);
             session.close();
+            cancel();
+            WebSocketManager.getInstance().removeConnection(this);
+            WebSocketManager.getInstance().updateConnectedPlayers();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
